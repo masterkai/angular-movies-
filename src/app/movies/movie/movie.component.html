@@ -1,0 +1,14 @@
+<p class="movie-card">
+  <img
+    [ngSrc]="movie().poster"
+    alt="{{movie().title}}"
+    width="169"
+    height="250"
+    [priority]="index() === 0"
+  >
+  {{ movie().title }}
+  <br>
+  {{ movie().releasedDate | date }}
+  <br>
+  {{ movie().price | currency }}
+</p>
