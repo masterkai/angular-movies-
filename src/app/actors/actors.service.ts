@@ -5,11 +5,12 @@ import {ActorCreationDTO, ActorDTO} from "./actors.models";
 import {Observable} from "rxjs";
 import {buildQueryParams} from "../shared/functions/buildQueryParams";
 import {PaginationDTO} from "../shared/models/PaginationDTO";
+import { ICRUDServices } from "../shared/interfaces/ICRUDServices";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ActorsService {
+export class ActorsService implements ICRUDServices<ActorDTO, ActorCreationDTO> {
 
   constructor() { }
 

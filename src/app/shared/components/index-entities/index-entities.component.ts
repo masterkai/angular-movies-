@@ -9,6 +9,7 @@ import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
 import { GenericListComponent } from "../generic-list/generic-list.component";
 import { PaginationDTO } from "../../models/PaginationDTO";
 import { CRUD_SERVICE_TOKEN } from "../../provider/providers";
+import { ICRUDServices } from "../../interfaces/ICRUDServices";
 
 @Component({
   selector: 'app-index-entities',
@@ -17,11 +18,11 @@ import { CRUD_SERVICE_TOKEN } from "../../provider/providers";
   templateUrl: './index-entities.component.html',
   styleUrl: './index-entities.component.css'
 })
-export class IndexEntitiesComponent<TDTO> implements OnInit {
+export class IndexEntitiesComponent<TDTO, TCreationDTO> implements OnInit {
   title = input.required<string>()
   createRoute = input.required<string>()
   editRoute = input.required<string>()
-  CRUDService = inject(CRUD_SERVICE_TOKEN) as any
+  CRUDService = inject(CRUD_SERVICE_TOKEN) as ICRUDServices<TDTO, TCreationDTO>
   entities!: TDTO[]
   // @ts-ignore
   columnsToDisplay = input.required<string[]>()
@@ -34,7 +35,9 @@ export class IndexEntitiesComponent<TDTO> implements OnInit {
   }
 
   loadRecords() {
+
     this.CRUDService.getPaginated(this.pagination).subscribe({
+      // @ts-ignore
       next: (response: HttpResponse<TDTO[]>) => {
         this.entities = response.body as TDTO[]
         this.totalRecordsCount = Number(response.headers.get('total-records-count'))

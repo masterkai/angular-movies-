@@ -5,11 +5,12 @@ import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {PaginationDTO} from "../shared/models/PaginationDTO";
 import {buildQueryParams} from "../shared/functions/buildQueryParams";
+import { ICRUDServices } from "../shared/interfaces/ICRUDServices";
 
 @Injectable({
   providedIn: 'root'
 })
-export class GenresService {
+export class GenresService implements ICRUDServices<GenreDTO, GenreCreationDTO> {
 
   constructor() {
   }
