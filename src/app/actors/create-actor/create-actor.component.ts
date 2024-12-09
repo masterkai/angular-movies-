@@ -5,27 +5,21 @@ import {ActorsService} from "../actors.service";
 import {Router} from "@angular/router";
 import {extractErrors} from "../../shared/functions/extractErrors";
 import {DisplayErrorsComponent} from "../../shared/components/display-errors/display-errors.component";
+import { CreateEntityComponent } from "../../shared/components/create-entity/create-entity.component";
+import { CRUD_SERVICE_TOKEN } from "../../shared/provider/providers";
 
 @Component({
   selector: 'app-create-actor',
   standalone: true,
-  imports: [ActorsFormComponent, DisplayErrorsComponent],
+  imports: [ ActorsFormComponent, DisplayErrorsComponent, CreateEntityComponent ],
   templateUrl: './create-actor.component.html',
-  styleUrl: './create-actor.component.css'
+  styleUrl: './create-actor.component.css',
+  providers: [{
+    provide: CRUD_SERVICE_TOKEN,
+    useClass: ActorsService
+  }]
 })
 export class CreateActorComponent {
-  actorsService = inject(ActorsService);
-  router = inject(Router);
-  errors: string[] = []
-  saveChanges(actor: ActorCreationDTO){
-    this.actorsService.create(actor).subscribe({
-      next: () => {
-        this.router.navigate(['/actors']);
-      },
-      error: (error) => {
-        this.errors = extractErrors(error);
-      }
-    });
-  }
 
+  actorsForm = ActorsFormComponent
 }
